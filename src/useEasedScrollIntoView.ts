@@ -1,0 +1,84 @@
+/**
+ * @fileoverview Hook that scrolls an element to the top of its nearest
+ * scrollable ancestor, or just far enough to show all of it, holding that position against CSS scroll
+ * anchoring for as long as a layout shift nearby (a toolbar expanding under
+ * the element, say) might still trigger it.
+ */
+
+import { useCallback, useEffect, useRef } from 'react'
+
+import { useTimer } from './useTimer'
+import {
+  findScrollableAncestor,
+  getTargetScrollTop,
+  type ScrollBlock,
+} from './utils'
+
+/**
+ * How long to suppress the scroll container's own scroll anchoring after
+ * the one write below -- long enough to cover a layout shift nearby that's
+ * still settling (a CSS transition resizing something under the element,
+ * say), since anchoring reacting to that shift, not this hook, is what
+ * actually moves `scrollTop` afterward. 300ms comfortably covers the
+ * longest transition this fires alongside (the RTE toolbar's own 150ms
+ * expand/collapse) plus a buffer for its layout to settle.
+ */
+const ANCHOR_SUPPRESSION_MS = 300
+
+/** Above a single device pixel, so a sub-pixel gap doesn't trigger a write that rounds away to nothing. */
+const SNAP_PX = 1
+
+/**
+ * Returns `scrollIntoView`, which scrolls `el` within its scroll container as
+ * `block` asks, and `cancel`, which undoes anything a call still has pending
+ * (also run automatically on unmount). Calling `scrollIntoView` again, on
+ * the same or a different element, cancels anything still pending first.
+ */
+export const useEasedScrollIntoView = () => {
+  const restoreTimer = useTimer()
+  const restoreAnchorRef = useRef<(() => void) | null>(null)
+
+  const cancel = useCallback(() => {
+    restoreTimer.clear()
+    restoreAnchorRef.current?.()
+    restoreAnchorRef.current = null
+  }, [restoreTimer])
+
+  useEffect(() => cancel, [cancel])
+
+  const scrollIntoView = useCallback(
+    (el: HTMLElement, block: ScrollBlock) => {
+      cancel()
+      const scrollParent = findScrollableAncestor(el)
+      // CSS scroll anchoring reacting to a layout shift this scroll is
+      // itself alongside (an expanding toolbar under `el`, say) is what
+      // moves `scrollTop` again after the one write below -- fighting that
+      // continuously produced a visible overshoot-and-settle. Anchoring
+      // exists to keep *unrelated* content from jumping under a reader;
+      // there's nothing unrelated here for it to protect, since this
+      // container's position is exactly what's being managed, so it's
+      // turned off for the window that shift needs to finish in.
+      const previousAnchor = scrollParent.style.overflowAnchor
+      scrollParent.style.overflowAnchor = 'none'
+      restoreAnchorRef.current = () => {
+        scrollParent.style.overflowAnchor = previousAnchor
+      }
+      const target = getTargetScrollTop(el, block, scrollParent)
+      // Writing `scrollTop` at all -- even to the value it's already at --
+      // is a live scroll action, not a guaranteed no-op: with anchoring
+      // suppressed but a transition still resizing something nearby, an
+      // unnecessary write is its own opening for the browser's layout
+      // machinery to move it anyway.
+      if (Math.abs(target - scrollParent.scrollTop) > SNAP_PX) {
+        scrollParent.scrollTop = target
+      }
+      restoreTimer.start(() => {
+        restoreAnchorRef.current?.()
+        restoreAnchorRef.current = null
+      }, ANCHOR_SUPPRESSION_MS)
+    },
+    [cancel, restoreTimer]
+  )
+
+  return { scrollIntoView, cancel }
+}

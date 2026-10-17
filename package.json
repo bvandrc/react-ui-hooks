@@ -1,0 +1,74 @@
+{
+  "name": "@bvandrc/react-ui-hooks",
+  "version": "1.0.0",
+  "description": "React hooks and helpers for browser UI behavior: the visual viewport and on-screen keyboard, focus handoff and return, press-and-hold, and scrolling into view.",
+  "keywords": [
+    "react",
+    "hooks",
+    "visual-viewport",
+    "virtual-keyboard",
+    "mobile",
+    "focus",
+    "long-press",
+    "scroll-into-view",
+    "popover"
+  ],
+  "author": "Blake Vandercar",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bvandrc/react-ui-hooks.git"
+  },
+  "homepage": "https://github.com/bvandrc/react-ui-hooks#readme",
+  "bugs": "https://github.com/bvandrc/react-ui-hooks/issues",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./test-support": "./src/test-support/index.ts"
+  },
+  "sideEffects": false,
+  "scripts": {
+    "format": "biome check . --fix",
+    "lint": "biome check .",
+    "ts:check": "tsc",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:isolated": "vitest run --isolate",
+    "check": "npm run ts:check && npm run lint"
+  },
+  "dependencies": {
+    "es-toolkit": "^1",
+    "type-fest": "^5",
+    "usehooks-ts": "^3"
+  },
+  "peerDependencies": {
+    "@testing-library/react": "^16",
+    "react": "^18 || ^19",
+    "vitest": ">=3"
+  },
+  "peerDependenciesMeta": {
+    "@testing-library/react": {
+      "optional": true
+    },
+    "vitest": {
+      "optional": true
+    }
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^2",
+    "@testing-library/jest-dom": "^7",
+    "@testing-library/react": "^16",
+    "@testing-library/user-event": "^14",
+    "@types/react": "^18",
+    "@vitejs/plugin-react": "^6",
+    "happy-dom": "^20",
+    "react": "^18",
+    "react-dom": "^18",
+    "tailwindcss": "^4",
+    "typescript": "^7",
+    "vitest": "^5"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

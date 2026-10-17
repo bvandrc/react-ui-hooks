@@ -1,0 +1,40 @@
+{
+  "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
+  "extends": ["./conventions/biome.base.json"],
+  "linter": {
+    "rules": {
+      "correctness": {
+        // Our own hooks whose results keep their identity, like `useState`'s
+        // setter, so they needn't be listed as dependencies.
+        "useExhaustiveDependencies": {
+          "level": "error",
+          "options": {
+            "hooks": [{ "name": "useStateRef", "stableResult": [1, 2] }]
+          }
+        }
+      }
+    }
+  },
+  "overrides": [
+    {
+      // A unit test is named for the module it covers (`conventions/ts-unit-testing.md`),
+      // so a hook's test file carries that hook's camelCase name.
+      "includes": ["**/__tests__/**/*.tsx"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useFilenamingConvention": {
+              "level": "error",
+              "options": {
+                "filenameCases": ["camelCase", "kebab-case", "PascalCase"]
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "files": {
+    "includes": ["**", "!!**/dist", "!!**/coverage", "!**/node_modules"]
+  }
+}
