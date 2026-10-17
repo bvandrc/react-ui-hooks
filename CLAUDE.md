@@ -16,17 +16,17 @@ Conventions live outside this file, synced from https://github.com/bvandrc/bvand
 
 | Command | Purpose |
 | --- | --- |
-| `npm run build` | Build `dist/` with tsdown: unbundled ESM plus `.d.mts` types |
-| `npm run format` | Biome format — **run before every commit** |
-| `npm run lint` | Biome lint and format check |
-| `npm run ts:check` | TypeScript check |
-| `npm run test` | Vitest unit tests (single run) |
-| `npm run test:isolated` | Vitest with each file in its own module graph, for checking whether a failure depends on another file |
-| `npm run check` | ts + lint (lint includes the format check); `prepublishOnly` runs it, then `test` and `build` |
+| `pnpm run build` | Build `dist/` with tsdown: unbundled ESM plus `.d.mts` types |
+| `pnpm run format` | Biome format — **run before every commit** |
+| `pnpm run lint` | Biome lint and format check |
+| `pnpm run ts:check` | TypeScript check |
+| `pnpm run test` | Vitest unit tests (single run) |
+| `pnpm run test:isolated` | Vitest with each file in its own module graph, for checking whether a failure depends on another file |
+| `pnpm run check` | ts + lint (lint includes the format check); `prepublishOnly` runs it, then `test` and `build` |
 
 ## Releasing
 
-Bump `version` in `package.json`, merge, then publish a GitHub release tagged `v<version>`. `.github/workflows/release.yml` checks the tag matches and runs `npm publish` with provenance.
+Bump `version` in `package.json`, merge, then publish a GitHub release tagged `v<version>`. `.github/workflows/release.yml` checks the tag matches and runs `pnpm publish` with provenance.
 
 ## Gotchas
 
@@ -34,4 +34,4 @@ Bump `version` in `package.json`, merge, then publish a GitHub release tagged `v
 - **The public API is `src/index.ts` and `src/test-support/index.ts`**: Removing or renaming an export from either is a breaking change, so it needs a major bump.
 - **Test support ships**: `src/test-support/` is published for consumers' own tests, so it imports `vi` from `vitest` explicitly rather than relying on Vitest's globals, which a consumer may not turn on.
 - **Unit tests share a worker**: `isolate` is off and files run in a shuffled order, so `vitest.setup.ts` clears the DOM, `localStorage`, and fake timers after every case, but a `vi.spyOn` or a module's own state is the test's to undo. Replay a seed-dependent failure with `--sequence.seed=<n>`.
-- **Install with npm 11+**: npm 10 crashes resolving tsdown's optional peer dependencies (`Cannot read properties of null (reading 'edgesOut')`). Node 24 ships npm 11.
+- **pnpm, pinned**: `packageManager` in `package.json` pins the pnpm version, which `corepack enable` (or CI's `pnpm/action-setup`) picks up. Install with `pnpm install`; npm and its `package-lock.json` aren't used here.

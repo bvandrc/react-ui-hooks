@@ -16,7 +16,7 @@ export default defineConfig({
     include: ['src/**/__tests__/**/*.test.ts?(x)'],
     // Files in a worker share one module graph and document instead of each
     // loading its own, which is most of what a run costs. The setup file and
-    // the options above reset what a test can leave behind; `npm run
+    // the options above reset what a test can leave behind; `pnpm run
     // test:isolated` reruns with isolation, to check whether a failure depends
     // on what another file left behind.
     isolate: false,
