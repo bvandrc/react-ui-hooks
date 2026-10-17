@@ -23,18 +23,33 @@
   "bugs": "https://github.com/bvandrc/react-ui-hooks/issues",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./test-support": "./src/test-support/index.ts"
+    ".": {
+      "types": "./dist/index.d.mts",
+      "default": "./dist/index.mjs"
+    },
+    "./test-support": {
+      "types": "./dist/test-support/index.d.mts",
+      "default": "./dist/test-support/index.mjs"
+    }
   },
+  "files": [
+    "dist"
+  ],
   "sideEffects": false,
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "scripts": {
+    "build": "tsdown",
     "format": "biome check . --fix",
     "lint": "biome check .",
     "ts:check": "tsc",
     "test": "vitest run",
     "test:watch": "vitest",
     "test:isolated": "vitest run --isolate",
-    "check": "npm run ts:check && npm run lint"
+    "check": "npm run ts:check && npm run lint",
+    "prepublishOnly": "npm run check && npm run test && npm run build"
   },
   "dependencies": {
     "es-toolkit": "^1",
@@ -65,6 +80,7 @@
     "react": "^18",
     "react-dom": "^18",
     "tailwindcss": "^4",
+    "tsdown": "^0.23",
     "typescript": "^7",
     "vitest": "^5"
   },
