@@ -9,13 +9,9 @@ import { useRef, useState } from 'react'
 import type { RequireAtLeastOne } from 'type-fest'
 
 import { useTimer } from './useTimer'
+import { clientPointOf, type Point } from './utils'
 
 type PressEvent = React.MouseEvent | React.TouchEvent
-
-interface Point {
-  x: number
-  y: number
-}
 
 /** How far a press may move before it stops being one. */
 type MoveThreshold = number | RequireAtLeastOne<Point>
@@ -30,13 +26,6 @@ const hasMovedPast = (moved: Point, moveThreshold: MoveThreshold): boolean => {
   const { x = Number.POSITIVE_INFINITY, y = Number.POSITIVE_INFINITY } =
     moveThreshold
   return moved.x > x || moved.y > y
-}
-
-/** Where the press is now, or `null` for an event with no pointer down. */
-const pointOf = (e: PressEvent): Point | null => {
-  // A touch event carries its points in `touches`; a mouse event is the point.
-  const point = 'touches' in e ? e.touches[0] : e
-  return point ? { x: point.clientX, y: point.clientY } : null
 }
 
 interface UsePressHoldOptions {
@@ -120,7 +109,7 @@ export const usePressHold = ({
     if (ignoreSelector && (e.target as HTMLElement).closest(ignoreSelector))
       return
 
-    const origin = pointOf(e)
+    const origin = clientPointOf(e)
     if (!origin) return
 
     originRef.current = origin
@@ -133,7 +122,7 @@ export const usePressHold = ({
 
   const trackMove = (e: PressEvent) => {
     const origin = originRef.current
-    const point = pointOf(e)
+    const point = clientPointOf(e)
     // No origin means no press is down, so there is nothing to cancel.
     if (!origin || !point) return
 

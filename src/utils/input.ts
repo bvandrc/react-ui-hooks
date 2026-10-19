@@ -3,6 +3,8 @@
  * that take them.
  */
 
+import type { Point } from './layout'
+
 /** The keys that activate a button. */
 const ACTIVATION_KEYS = ['Enter', ' '] as const
 
@@ -105,7 +107,26 @@ export const isComposing = (event: KeyboardEvent) =>
   // gives it keyCode 229.
   event.isComposing || event.keyCode === 229
 
-/** Whether a pointer event is the first finger down, or the main mouse button. */
+/**
+ * Whether a pointer event is the primary pointer's main button: the first
+ * finger down, or a left click.
+ */
 export const isPrimaryPress = (
   event: Pick<PointerEvent, 'isPrimary' | 'button'>
 ) => event.isPrimary && event.button === 0
+
+type PositionedEvent =
+  | Pick<MouseEvent, 'clientX' | 'clientY'>
+  | { touches: ArrayLike<Pick<Touch, 'clientX' | 'clientY'>> }
+
+/**
+ * Where a mouse or touch event's pointer is, relative to the viewport.
+ *
+ * For a touch, that is the first finger still down, so `null` on a `touchend`
+ * that lifted the last one. Takes React's events and the DOM's alike.
+ */
+export const clientPointOf = (event: PositionedEvent): Point | null => {
+  // A touch event carries its points in `touches`; a mouse event is the point.
+  const point = 'touches' in event ? event.touches[0] : event
+  return point ? { x: point.clientX, y: point.clientY } : null
+}
