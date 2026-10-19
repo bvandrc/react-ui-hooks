@@ -3,6 +3,12 @@
  * them puts them.
  */
 
+/** An x and y pair, in px. */
+export interface Point {
+  x: number
+  y: number
+}
+
 /**
  * The nearest ancestor of `node` whose own overflow scrolls, or the document's
  * scrolling element when none does.

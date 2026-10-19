@@ -139,11 +139,16 @@ describe('isTextEntry', () => {
 })
 
 describe('clientPointOf', () => {
-  const FINGER = { clientX: 50, clientY: 100 } as const
-  const SECOND_FINGER = { clientX: 300, clientY: 400 } as const
+  type PointEvent = Pick<MouseEvent | Touch, 'clientX' | 'clientY'>
+  const MOUSE_EVENT = { clientX: 50, clientY: 100 } satisfies PointEvent
+  const FINGER = { clientX: 50, clientY: 100 } satisfies PointEvent
+  const SECOND_FINGER = {
+    clientX: 300,
+    clientY: 400,
+  } satisfies PointEvent
 
   it('reads a mouse event straight off the event', () => {
-    expect(clientPointOf(FINGER)).toEqual({ x: 50, y: 100 })
+    expect(clientPointOf(MOUSE_EVENT)).toEqual({ x: 50, y: 100 })
   })
 
   it('reads a touch event off its first finger', () => {
@@ -153,7 +158,7 @@ describe('clientPointOf', () => {
     })
   })
 
-  it('is null for a touch event with no finger down', () => {
+  it('is null for a touch event with no finger still down, as on the last touchend', () => {
     expect(clientPointOf({ touches: [] })).toBeNull()
   })
 })

@@ -1,6 +1,6 @@
 # @bvandrc/react-ui-hooks
 
-Generic React hooks and helpers for UI behavior, such as  press-and-hold, scrolling into view, the visual viewport and on-screen keyboard, focus handoff and return, and more.
+Generic React hooks and helpers for UI behavior, such as press-and-hold, scrolling into view, the visual viewport and on-screen keyboard, focus handoff and return, and more.
 
 ```bash
 npm install @bvandrc/react-ui-hooks
@@ -15,11 +15,14 @@ Requires React 18 or 19. ESM only, with types included.
 | Export | What it does |
 | --- | --- |
 | `useIsMobile` | Whether the viewport is narrower than a breakpoint (Tailwind's `md` by default). |
+| `getBelowBreakpointQuery` | The media query `useIsMobile` matches for a breakpoint, stopping 1px short so it never overlaps a `min-width` style at the same width. |
 | `isTouchDevice` | Whether the primary input is touch, based on the `(pointer: coarse)` media query. |
 | `detectDevice` | Whether the page is running on iOS, Android, or desktop, based on `navigator.userAgent`. |
 | `useVisualViewportPin` | Keeps a fixed, full-screen element, like a sheet, matched to `window.visualViewport`, so it stays on screen and scrollable while the on-screen keyboard is open or the page is pinch-zoomed. |
 | `useVisualViewportListener` | Calls a handler on each visual viewport `resize` or `scroll`, for as long as the component is mounted. |
 | `getRoomAround` | How much of the screen is free above and below an element, not counting what an open on-screen keyboard covers. |
+<!-- Not really that important / useful compared to how much it takes to explain -->
+<!-- | `getBelowBreakpointQuery` | The media query `useIsMobile` matches for a breakpoint, stopping 1px short so it never overlaps a `min-width` style at the same width. | -->
 
 ### Page Lifecycle
 
@@ -63,7 +66,7 @@ Requires React 18 or 19. ESM only, with types included.
 | `nativeActivationKeys` | The keys the browser already clicks an element on by itself, such as Enter for a link and Space for a checkbox. |
 | `isTextEntry` | Whether an element takes typed text: an `<input>`, a `<textarea>`, or `contenteditable`. |
 | `isComposing` | Whether a keydown belongs to an IME composition, such as the Enter that commits a candidate, including Safari's case that reports it as not composing. |
-| `isPrimaryPress` | Whether a pointer event is the first finger down or the main mouse button. |
+| `isPrimaryPress` | Whether a pointer event is the primary pointer's main button: the first finger down, or a left click. |
 | `clientPointOf` | Where a mouse or touch event's pointer is in the viewport, as a `Point`: the first finger for a touch, or `null` once none is down. Takes React's events and the DOM's alike. |
 
 ### State and Timing
