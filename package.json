@@ -1,7 +1,7 @@
 {
   "name": "@bvandrc/react-ui-hooks",
   "version": "1.0.0",
-  "description": "React hooks and helpers for browser UI behavior: the visual viewport and on-screen keyboard, focus handoff and return, press-and-hold, and scrolling into view.",
+  "description": "Generic React hooks and helpers for UI behavior, such as press-and-hold, scrolling into view, the visual viewport and on-screen keyboard, focus handoff and return, and more.",
   "keywords": [
     "react",
     "hooks",

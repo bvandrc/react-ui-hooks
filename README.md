@@ -14,12 +14,12 @@ Requires React 18 or 19. ESM only, with types included.
 
 | Export | What it does |
 | --- | --- |
-| `useVisualViewportPin` | Keeps a `fixed inset-0` element matched to `window.visualViewport`, so a full-screen sheet stays on screen and scrollable while the on-screen keyboard is open or the page is pinch-zoomed. |
-| `useVisualViewportListener` | Calls a handler on each visual viewport `resize` or `scroll`, for as long as the component is mounted. |
-| `useMakeRoomForPopover` | When a popover mounts too tall to fit above or below its trigger, scrolls the trigger's scroll area so it does. |
 | `useScrollOnFocus` | Focus and blur handlers that scroll a focused element to where `block` (`start` or `nearest`) puts it and keep it there as it resizes. On touch devices, also restores the scroll position the on-screen keyboard leaves behind when it closes. |
 | `useEasedScrollIntoView` | `scrollIntoView` within an element's own scroll container, eased, and cancelable. |
 | `useIsMobile` | Whether the viewport is narrower than a breakpoint (Tailwind's `md` by default), flipping at exactly the width `md:` styles do. |
+| `useVisualViewportPin` | Keeps a `fixed inset-0` element matched to `window.visualViewport`, so a full-screen sheet stays on screen and scrollable while the on-screen keyboard is open or the page is pinch-zoomed. |
+| `useVisualViewportListener` | Calls a handler on each visual viewport `resize` or `scroll`, for as long as the component is mounted. |
+| `useMakeRoomForPopover` | When a popover mounts too tall to fit above or below its trigger, scrolls the trigger's scroll area so it does. |
 
 ### Focus
 
