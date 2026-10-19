@@ -3,6 +3,7 @@ import { fireEvent, render, screen } from '@testing-library/react'
 import {
   blurFocusedTextInput,
   clickOnActivationKey,
+  clientPointOf,
   isComposing,
   isPrimaryPress,
   isTextEntry,
@@ -134,5 +135,25 @@ describe('isTextEntry', () => {
       document.body.append(element)
       expect(isTextEntry(element), html).toBe(expected)
     }
+  })
+})
+
+describe('clientPointOf', () => {
+  const FINGER = { clientX: 50, clientY: 100 } as const
+  const SECOND_FINGER = { clientX: 300, clientY: 400 } as const
+
+  it('reads a mouse event straight off the event', () => {
+    expect(clientPointOf(FINGER)).toEqual({ x: 50, y: 100 })
+  })
+
+  it('reads a touch event off its first finger', () => {
+    expect(clientPointOf({ touches: [FINGER, SECOND_FINGER] })).toEqual({
+      x: 50,
+      y: 100,
+    })
+  })
+
+  it('is null for a touch event with no finger down', () => {
+    expect(clientPointOf({ touches: [] })).toBeNull()
   })
 })

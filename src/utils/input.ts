@@ -109,3 +109,25 @@ export const isComposing = (event: KeyboardEvent) =>
 export const isPrimaryPress = (
   event: Pick<PointerEvent, 'isPrimary' | 'button'>
 ) => event.isPrimary && event.button === 0
+
+/** A position on the page, in px. */
+export interface Point {
+  x: number
+  y: number
+}
+
+type PositionedEvent =
+  | Pick<MouseEvent, 'clientX' | 'clientY'>
+  | { touches: ArrayLike<Pick<Touch, 'clientX' | 'clientY'>> }
+
+/**
+ * Where a mouse or touch event's pointer is, relative to the viewport.
+ *
+ * For a touch, that is the first finger down; `null` once none is, as on
+ * `touchend`. Takes React's events and the DOM's alike.
+ */
+export const clientPointOf = (event: PositionedEvent): Point | null => {
+  // A touch event carries its points in `touches`; a mouse event is the point.
+  const point = 'touches' in event ? event.touches[0] : event
+  return point ? { x: point.clientX, y: point.clientY } : null
+}
