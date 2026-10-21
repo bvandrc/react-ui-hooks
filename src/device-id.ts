@@ -4,10 +4,11 @@
  */
 
 export interface DeviceIdOptions {
-  /** The localStorage key the id persists under, as a JSON string. */
+  /**
+   * The localStorage key the id persists under, as a JSON string. Minting it
+   * holds the Web Lock `<storageKey>-lock`.
+   */
   storageKey: string
-  /** The Web Lock that guards minting it; defaults to `<storageKey>-lock`. */
-  lockName?: string
 }
 
 const readStoredId = (storageKey: string): string | undefined => {
@@ -26,10 +27,7 @@ const readStoredId = (storageKey: string): string | undefined => {
  * Its key should not be scoped to a user or session, so the id survives
  * logout, account deletion, and the like.
  */
-export const createDeviceId = ({
-  storageKey,
-  lockName = `${storageKey}-lock`,
-}: DeviceIdOptions) => {
+export const createDeviceId = ({ storageKey }: DeviceIdOptions) => {
   let cachedDeviceId: string | undefined
 
   const readOrMintDeviceId = (): string => {
@@ -57,7 +55,10 @@ export const createDeviceId = ({
       // it wrote. Without the API the race is back, but it's no worse than
       // having no lock at all.
       cachedDeviceId = navigator.locks
-        ? await navigator.locks.request(lockName, readOrMintDeviceId)
+        ? await navigator.locks.request(
+            `${storageKey}-lock`,
+            readOrMintDeviceId
+          )
         : readOrMintDeviceId()
 
       return cachedDeviceId
