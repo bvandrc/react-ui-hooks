@@ -3,14 +3,6 @@
  * devices apart.
  */
 
-export interface DeviceIdOptions {
-  /**
-   * The localStorage key the id persists under, as a JSON string. Minting it
-   * holds the Web Lock `<storageKey>-lock`.
-   */
-  storageKey: string
-}
-
 const readStoredId = (storageKey: string): string | undefined => {
   try {
     const stored: unknown = JSON.parse(localStorage.getItem(storageKey) ?? '')
@@ -27,7 +19,15 @@ const readStoredId = (storageKey: string): string | undefined => {
  * Its key should not be scoped to a user or session, so the id survives
  * logout, account deletion, and the like.
  */
-export const createDeviceId = ({ storageKey }: DeviceIdOptions) => {
+export const createDeviceId = ({
+  storageKey,
+}: {
+  /**
+   * The localStorage key the id persists under, as a JSON string. Minting it
+   * holds the Web Lock `<storageKey>-lock`.
+   */
+  storageKey: string
+}) => {
   let cachedDeviceId: string | undefined
 
   const readOrMintDeviceId = (): string => {
