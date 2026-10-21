@@ -78,8 +78,8 @@ Requires React 18 or 19. ESM only, with types included.
 | `useStateRef` | `useState`, plus a ref that always holds the latest value set, for handlers built once. |
 | `useTimer` | A timeout started from a handler rather than on render, replaced by the next `start` and cleared on unmount. |
 | `useHasPassed` | Whether a date has passed, re-rendering at the moment it does with one timer rather than polling. |
-| `createRequiredContext` | A context paired with the hook that reads it, which throws outside its provider so callers get the value without a `null` check. |
 | `useDebouncedPersist` | Persists a value to `localStorage`, debounced, and flushed when the app is hidden or closed so nothing is lost to the debounce window. |
+| `createRequiredContext` | A context paired with the hook that reads it, which throws outside its provider so callers get the value without a `null` check. |
 
 ## Other Helpers
 
