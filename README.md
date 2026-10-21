@@ -29,6 +29,7 @@ Requires React 18 or 19. ESM only, with types included.
 | Export | What it does |
 | --- | --- |
 | `useAppVisibility` | Calls `onVisible` or `onHidden` as the document's visibility changes. |
+| `useIsOnline` | Whether the browser reports a network connection, re-rendering as it goes offline and back. Takes an optional `onChange` for each switch. |
 | `onAppLeave` | Calls back when the page is hidden or unloading, including when a phone kills a backgrounded app without `pagehide` ever firing. Works outside React. |
 
 ### Scrolling
