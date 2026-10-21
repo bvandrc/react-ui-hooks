@@ -78,6 +78,7 @@ Requires React 18 or 19. ESM only, with types included.
 | `useStateRef` | `useState`, plus a ref that always holds the latest value set, for handlers built once. |
 | `useTimer` | A timeout started from a handler rather than on render, replaced by the next `start` and cleared on unmount. |
 | `useHasPassed` | Whether a date has passed, re-rendering at the moment it does with one timer rather than polling. |
+| `createRequiredContext` | A context paired with the hook that reads it, which throws outside its provider so callers get the value without a `null` check. |
 | `useDebouncedPersist` | Persists a value to `localStorage`, debounced, and flushed when the app is hidden or closed so nothing is lost to the debounce window. |
 
 ## Other Helpers
@@ -94,6 +95,8 @@ Plain functions, usable outside React:
     <tr><td><code>buildMailtoHref</code></td><td>A <code>mailto:</code> link with its subject and body filled in, with spaces encoded so mail clients don't show them as <code>+</code>.</td></tr>
     <tr><td colspan="2"><b><i>Logging</i></b></td></tr>
     <tr><td><code>createLocalLogger</code></td><td>A capped, timestamped log kept in <code>localStorage</code>, so a diagnostics report still covers what happened before a reload or an app update, plus hooks that log to it.</td></tr>
+    <tr><td colspan="2"><b><i>Device identity</i></b></td></tr>
+    <tr><td><code>createDeviceId</code></td><td>A per-install id kept in <code>localStorage</code>, minted on first read under a Web Lock so tabs opening at once agree on one, with a setter to carry it across a wholesale <code>localStorage.clear()</code>.</td></tr>
     <tr><td colspan="2"><b><i>Constants</i></b></td></tr>
     <tr><td><code>TAILWIND_BREAKPOINTS</code></td><td>Tailwind's default breakpoints in px, each the <code>min-width</code> its prefix applies from.</td></tr>
   </tbody>
