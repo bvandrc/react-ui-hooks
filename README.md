@@ -94,6 +94,10 @@ Plain functions, usable outside React:
     <tr><td><code>buildMailtoHref</code></td><td>A <code>mailto:</code> link with its subject and body filled in, with spaces encoded so mail clients don't show them as <code>+</code>.</td></tr>
     <tr><td colspan="2"><b><i>Logging</i></b></td></tr>
     <tr><td><code>createLocalLogger</code></td><td>A capped, timestamped log kept in <code>localStorage</code>, so a diagnostics report still covers what happened before a reload or an app update, plus hooks that log to it.</td></tr>
+    <tr><td colspan="2"><b><i>Context</i></b></td></tr>
+    <tr><td><code>createRequiredContext</code></td><td>A context paired with the hook that reads it, which throws outside its provider so callers get the value without a <code>null</code> check.</td></tr>
+    <tr><td colspan="2"><b><i>Device identity</i></b></td></tr>
+    <tr><td><code>createDeviceId</code></td><td>A per-install id kept in <code>localStorage</code>, minted on first read under a Web Lock so tabs opening at once agree on one, with a setter that can be used to carry it across a wholesale <code>localStorage.clear()</code>.</td></tr>
     <tr><td colspan="2"><b><i>Constants</i></b></td></tr>
     <tr><td><code>TAILWIND_BREAKPOINTS</code></td><td>Tailwind's default breakpoints in px, each the <code>min-width</code> its prefix applies from.</td></tr>
   </tbody>
