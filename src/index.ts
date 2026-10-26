@@ -3,7 +3,6 @@
 
 export * from './constants/tailwind'
 export * from './device-id'
-export * from './local-logger'
 export * from './required-context'
 export * from './useAppVisibility'
 export * from './useDebouncedPersist'
