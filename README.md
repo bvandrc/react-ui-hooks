@@ -94,7 +94,7 @@ Plain functions, usable outside React:
     <tr><td><code>shareFiles</code></td><td>Opens the native share sheet with files, and resolves to whether they were shared, the user cancelled, or the caller should fall back.</td></tr>
     <tr><td><code>buildMailtoHref</code></td><td>A <code>mailto:</code> link with its subject and body filled in, with spaces encoded so mail clients don't show them as <code>+</code>.</td></tr>
     <tr><td colspan="2"><b><i>Logging</i></b></td></tr>
-    <tr><td><code>createLocalLogger</code></td><td>A capped, timestamped log kept in <code>localStorage</code>, so a diagnostics report still covers what happened before a reload or an app update, plus hooks that log to it.</td></tr>
+    <tr><td><code>createLocalLogger</code></td><td><b>Deprecated:</b> moved to <a href="https://www.npmjs.com/package/persistent-logger"><code>persistent-logger</code></a>, which has fixed it since. A capped, timestamped log kept in <code>localStorage</code>, so a diagnostics report still covers what happened before a reload or an app update, plus hooks that log to it.</td></tr>
     <tr><td colspan="2"><b><i>Context</i></b></td></tr>
     <tr><td><code>createRequiredContext</code></td><td>A context paired with the hook that reads it, which throws outside its provider so callers get the value without a <code>null</code> check.</td></tr>
     <tr><td colspan="2"><b><i>Device identity</i></b></td></tr>

@@ -1,5 +1,6 @@
 import { renderHook } from '@testing-library/react'
 
+// biome-ignore lint/suspicious/noDeprecatedImports: covers it while it still ships
 import { createLocalLogger } from '../local-logger'
 
 const STORAGE_KEY = 'test-local-log'

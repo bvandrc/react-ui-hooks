@@ -10,9 +10,14 @@ import { useEffect, useRef } from 'react'
 
 import { onAppLeave } from './utils/page'
 
-/** `info` is the default, and the one level an entry leaves unsaid. */
+/**
+ * `info` is the default, and the one level an entry leaves unsaid.
+ *
+ * @deprecated Moved to `persistent-logger`: use its `LogLevel`.
+ */
 export type LogLevel = 'info' | 'warn' | 'error'
 
+/** @deprecated Moved to `persistent-logger`: use its `LogEntry`. */
 export interface LogEntry {
   timestamp: string
   /** Left out at `info`, so only the levels worth noticing show. */
@@ -22,6 +27,7 @@ export interface LogEntry {
   detail?: unknown
 }
 
+/** @deprecated Moved to `persistent-logger`: use its `PersistentLoggerOptions`. */
 export interface LocalLoggerOptions {
   /** The localStorage key the log persists under. */
   storageKey: string
@@ -41,6 +47,7 @@ const readStoredEntries = (storageKey: string): LogEntry[] => {
   }
 }
 
+/** @deprecated Moved to `persistent-logger`: use its `PersistentLogger`. */
 export class LocalLogger<Scope extends string = string> {
   private readonly storageKey: string
   private readonly maxEntries: number
@@ -144,7 +151,12 @@ export class LocalLogger<Scope extends string = string> {
   }
 }
 
-/** A `LocalLogger`, alongside the React hooks that log to it. */
+/**
+ * A `LocalLogger`, alongside the React hooks that log to it.
+ *
+ * @deprecated Moved to `persistent-logger`: use `createPersistentLogger` from
+ * `persistent-logger/react`.
+ */
 export const createLocalLogger = <Scope extends string = string>(
   options: LocalLoggerOptions
 ) => {
