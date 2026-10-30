@@ -1,6 +1,6 @@
 {
   "$schema": "./node_modules/@biomejs/biome/configuration_schema.json",
-  "extends": ["./conventions/biome.base.json"],
+  "extends": ["./conventions/biome.base.jsonc"],
   "linter": {
     "rules": {
       "correctness": {
@@ -22,6 +22,12 @@
       "includes": ["**/__tests__/**/*.tsx"],
       "linter": {
         "rules": {
+          // A case declares the components it renders inside itself, closing
+          // over its own fixtures. Each is rendered once, so the identity the
+          // rule guards across renders never comes into it.
+          "correctness": {
+            "noComponentHookFactories": "off"
+          },
           "style": {
             "useFilenamingConvention": {
               "level": "error",
@@ -35,6 +41,12 @@
     }
   ],
   "files": {
-    "includes": ["**", "!!**/dist", "!!**/coverage", "!**/node_modules"]
+    "includes": [
+      "**",
+      "!!conventions",
+      "!!**/dist",
+      "!!**/coverage",
+      "!**/node_modules"
+    ]
   }
 }
