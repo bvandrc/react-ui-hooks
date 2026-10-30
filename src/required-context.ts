@@ -13,6 +13,7 @@ import { createContext, useContext } from 'react'
 export const createRequiredContext = <T>(providerName: string) => {
   const Context = createContext<T | null>(null)
 
+  // biome-ignore lint/correctness/noComponentHookFactories: the factory runs once per context, at module scope, so the hook keeps one identity
   const useRequiredContext = () => {
     const value = useContext(Context)
     if (value === null) {
