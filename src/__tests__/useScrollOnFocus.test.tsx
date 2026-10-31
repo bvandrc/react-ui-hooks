@@ -4,7 +4,7 @@ import {
   mockResizeObserver,
   mockTouchDevice,
   mockVisualViewport,
-} from '../test-support'
+} from '@/test-support'
 import { useScrollOnFocus } from '../useScrollOnFocus'
 
 afterEach(() => {

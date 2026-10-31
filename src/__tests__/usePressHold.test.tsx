@@ -1,7 +1,7 @@
 import { act, fireEvent, render, screen } from '@testing-library/react'
 
+import { typedEntries } from '@/utils'
 import { usePressHold } from '../usePressHold'
-import { typedEntries } from '../utils'
 
 /** Long enough that any press still down has become a hold. */
 const PAST_THE_HOLD_MS = 1000

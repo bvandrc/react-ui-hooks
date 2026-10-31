@@ -6,9 +6,9 @@
 
 import { vi } from 'vitest'
 
-import { TAILWIND_BREAKPOINTS } from '../constants/tailwind'
-import { getBelowBreakpointQuery } from '../useMobile'
-import { TOUCH_QUERY } from '../utils/device'
+import { TAILWIND_BREAKPOINTS } from '@/constants/tailwind'
+import { getBelowBreakpointQuery } from '@/useMobile'
+import { TOUCH_QUERY } from '@/utils/device'
 
 /** Stubs `window.matchMedia` so a query matches exactly when `isMatch` says it does. */
 export const mockMatchMedia = (isMatch: (query: string) => boolean) => {

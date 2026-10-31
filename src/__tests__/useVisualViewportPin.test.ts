@@ -1,7 +1,7 @@
 import { useRef, useState } from 'react'
 import { act, renderHook } from '@testing-library/react'
 
-import { mockVisualViewport } from '../test-support'
+import { mockVisualViewport } from '@/test-support'
 import { useVisualViewportPin } from '../useVisualViewportPin'
 
 afterEach(() => {

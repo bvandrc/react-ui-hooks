@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 
-import { mockVisualViewport } from '../../test-support'
+import { mockVisualViewport } from '@/test-support'
 import {
   findScrollableAncestor,
   getRoomAround,
